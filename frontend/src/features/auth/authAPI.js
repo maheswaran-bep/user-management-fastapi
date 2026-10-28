@@ -1,14 +1,14 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL : "http://127.0.0.1:8000",
+    baseURL: import.meta.env.VITE_API_URL || "http://localhost:8008",
 })
 
 
-API.interceptors.request.use((config)=>{
-    const token =  localStorage.getItem("token")
+API.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token")
 
-    if (token){
+    if (token) {
         config.headers.Authorization = `bearer ${token}`
     }
     return config
@@ -16,9 +16,9 @@ API.interceptors.request.use((config)=>{
 
 
 
-export const userLoginAPI = (data)=>API.post("/user/login",data)
+export const userLoginAPI = (data) => API.post("/user/login", data)
 export const userSignupAPI = (data) => API.post("/user/register", data);
-export const adminLoginAPI = (data)=>API.post("/admin/login",data)
+export const adminLoginAPI = (data) => API.post("/admin/login", data)
 
 export const getUsersAPI = () => API.get("/admin/users");
 export const deleteUserAPI = (id) => API.delete(`/admin/users/${id}`);
